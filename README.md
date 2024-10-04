@@ -45,10 +45,17 @@ if (~islogical(im))
     % compute the gray threshold for binarizing
    level=graythresh(im); 
     % binarizare imagine
-    curve = im2bw(im,level);
+    BW = im2bw(im,level);
 end
+
+[B,L,N] = bwboundaries(BW,'noholes'); 
+
+nc = 15; % number of Fourier coefficients
+for k=1:N
+    X = B{k}(:,2);
+    Y = B{k}(:,1);
+    contur = [X'; Y'];
 % Calculate elliptic Fourier descriptors
-nc = 10; % number of Fourier coefficients
 ellipticFourierDescriptors(curve, nc);
 
 % Calculate angular function descriptors
